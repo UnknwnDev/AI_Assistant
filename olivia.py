@@ -2,7 +2,7 @@
 # TODO: Renname file later
 from Voice_Recognition.ai import AI
 
-olivia = AI('Olivia')
+olivia = AI('Olivia', True)
 
 command = ""
 current_tag = None

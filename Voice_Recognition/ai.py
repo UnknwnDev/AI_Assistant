@@ -14,22 +14,27 @@ from Virtual_Assistant_Tasks.skills_manager import Skills
 
 class AI:
 	__name = ""
-	def __init__(self, name=None):
+	def __init__(self, name=None, new_flag = False):
 		self.r = sr.Recognizer()
-		self.m = sr.Microphone()
+		self.m = sr.Microphone(device_index=0)
 		self.skills = Skills(self)
 
 		self.assistant = GenericAssistant('Voice_Recognition/intents.json')
-		self.assistant.train_model()
 		if name is not None:
 			self.__name = name
-			#self.assistant.save_model(self.name)
-			#self.assistant.load_model(self.name)
+			if new_flag:
+				self.__update()
+			else:
+				self.assistant.load_model(self.name)
+
 		
 		print("Listening")
 		with self.m as source:
 			self.r.adjust_for_ambient_noise(source, duration=0.5)
 
+	def __update(self):
+		self.assistant.train_model()
+		self.assistant.save_model(self.name)
 
 	@property
 	def name(self):
