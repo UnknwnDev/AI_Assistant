@@ -1,0 +1,87 @@
+{
+  "intents": [
+    {
+      "tag": "greeting",
+      "patterns": [
+        "Hey",
+        "Hello",
+        "What's up?",
+        "How is it going?",
+        "Hi",
+        "Good day"
+      ],
+      "responses": [
+        "Hello", 
+        "Hello, what can I do for you?", 
+        "Hello, Sir!"]
+    },
+    {
+      "tag": "create_note",
+      "patterns": [
+        "Please create a new note",
+        "New note",
+        "Create a note",
+        "I want to create a note"
+      ],
+      "responses": [""]
+    },
+    {
+      "tag": "add_todo",
+      "patterns": [
+        "I want to add a todo",
+        "add a new todot",
+        "add a todo to my list",
+        "new item on my todo list"
+      ],
+      "responses": [
+        "Tell me what to add to your to do's?",
+        "What do you want to be added?",
+        "What should I add for you Sir?"
+      ]
+    },
+    {
+      "tag": "remove_todo",
+      "patterns": [
+        "remove a todo",
+        "Mark a todo as done",
+        "remove a todo from the list",
+        "remove item on my todo list"
+      ],
+      "responses": [
+        "Tell me what to remove to your todos?",
+        "What do you want to be removed?",
+        "What should I remove for you Sir?"
+      ]
+    },
+    {
+      "tag": "show_todos",
+      "patterns": [
+        "Show my todos",
+        "What are my todos",
+        "What is on my to do list"
+      ],
+      "responses": [
+        "The current items on your to do's are",
+        "Here are your to do's",
+        "Listing your to do's"
+      ]
+    },
+    {
+      "tag": "exit",
+      "patterns": [
+        "Bye",
+        "Stop",
+        "Quit",
+        "I want to quit",
+        "Goodbye",
+        "I want to exit",
+        "I have to go"
+      ],
+      "responses": [
+        "Bye, Sir", 
+        "See you later",
+        "Goodbye, I'm going to sleep now"
+      ]
+    }
+  ]
+}
