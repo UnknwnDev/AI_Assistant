@@ -2,12 +2,12 @@
 # TODO: Renname file later
 from Voice_Recognition.ai import AI
 
-olivia = AI('Olivia', True)
+olivia = AI('Olivia')
 
 command = ""
 current_tag = None
 
-while True and current_tag != "exit":
+while True:
 	try:
 		command = olivia.listen()
 		command = command.lower()
@@ -17,13 +17,23 @@ while True and current_tag != "exit":
 		print("There was an error")
 		command = ""
 	print("Command was:", command)
+
+	#####################################
 	if current_tag is not None:
+		print("Tag was:", current_tag)
+		#********************************#
 		if current_tag == "add_todo":
 			olivia.skills.add_todo()
 		if current_tag == 'show_todos':
 			olivia.skills.show_todos()
 		if current_tag == 'remove_todo':
 			olivia.skills.remove_todo()
+		#********************************#
+		if current_tag == "jokes":
+			olivia.skills.jokes()
+
+		if current_tag == "exit":
+			break
 
 		current_tag = None
-	
+	######################################

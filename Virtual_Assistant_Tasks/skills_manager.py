@@ -7,7 +7,7 @@ class Skills:
 	def __init__(self, ai):
 		self.__ai = ai
 
-	def joke(self):
+	def jokes(self):
 		funny = pyjokes.get_joke()
 		print(funny)
 		self.__ai.say(funny)
