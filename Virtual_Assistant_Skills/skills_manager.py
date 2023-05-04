@@ -62,14 +62,14 @@ class Skills:
 			event_description = self.__ai.listen()
 			message = f"Ok, adding event {event_name}"
 			self.__ai.say(message)
-			self.__calender.add_event(begin=event_begin, name=event_name, description=event_description)
+			self.__calender.add_event(begin=event_isodate, name=event_name, description=event_description)
 			self.__calender.save()
 			return True
 		except:
 			print("Oops there was an error")
 			return False
 	
-	def remove_event() -> bool:
+	def remove_event(self) -> bool:
 		try:
 			event_name = self.__ai.listen()
 			try:
@@ -84,7 +84,7 @@ class Skills:
 			print("Oops there was an error")
 			return False
 
-	def list_events(period):
+	def list_events(self, period):
 		this_period = self.__calender.list_events(period=period)
 		if this_period is not None:
 			message = "There "

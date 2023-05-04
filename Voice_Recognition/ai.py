@@ -18,7 +18,7 @@ class AI:
 		self.r = sr.Recognizer()
 		self.m = sr.Microphone()
 
-		print(sr.Microphone.list_microphone_names())
+		#print(sr.Microphone.list_microphone_names())
 
 		self.skills = Skills(self)
 

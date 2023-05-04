@@ -10,10 +10,7 @@
         "Hi",
         "Good day"
       ],
-      "responses": [
-        "Hello", 
-        "Hello, what can I do for you?", 
-        "Hello, Sir!"]
+      "responses": ["Hello", "Hello, what can I do for you?", "Hello, Sir!"]
     },
     {
       "tag": "jokes",
@@ -23,14 +20,17 @@
         "I want to hear a joke",
         "Can you make me laugh"
       ],
-      "responses": ["Ok Sir, Here is one for you.","I got a good one for you Sir."]
+      "responses": [
+        "Ok Sir, Here is one for you.",
+        "I got a good one for you Sir."
+      ]
     },
-  
+
     {
       "tag": "add_todo",
       "patterns": [
         "I want to add a todo",
-        "add a new todot",
+        "add a new todo",
         "add a todo to my list",
         "new item on my todo list"
       ],
@@ -68,6 +68,47 @@
       ]
     },
 
+    {
+      "tag": "add_event",
+      "patterns": [
+        "I want to add an event",
+        "add a new event",
+        "add a event to my calender",
+        "new event on my calender"
+      ],
+      "responses": [
+        "Tell me what to add to your calender?",
+        "What do you want to be added?",
+        "What should I add for you Sir?"
+      ]
+    },
+    {
+      "tag": "remove_event",
+      "patterns": [
+        "remove a event",
+        "remove event from calender",
+        "Mark event as done"
+      ],
+      "responses": [
+        "Tell me what to remove from your events?",
+        "What do you want to be removed?",
+        "What should I remove for you Sir?"
+      ]
+    },
+    {
+      "tag": "list_events",
+      "patterns": [
+        "Show my calender events",
+        "What are my current events",
+        "What is on my calender",
+        "List my events"
+      ],
+      "responses": [
+        "The current events on your calender are",
+        "Here are your events",
+        "Listing your events"
+      ]
+    },
 
     {
       "tag": "exit",
@@ -81,7 +122,7 @@
         "I have to go"
       ],
       "responses": [
-        "Bye, Sir", 
+        "Bye, Sir",
         "See you later",
         "Goodbye, I'm going to sleep now"
       ]

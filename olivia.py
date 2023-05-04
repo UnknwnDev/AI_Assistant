@@ -31,6 +31,14 @@ while True:
 		#********************************#
 		if current_tag == "jokes":
 			olivia.skills.jokes()
+		#********************************#
+		if current_tag == "add_event":
+			olivia.skills.add_event()
+		if current_tag == 'list_events':
+			olivia.skills.list_events()
+		if current_tag == 'remove_event':
+			olivia.skills.remove_event()
+		#********************************#
 
 		if current_tag == "exit":
 			break

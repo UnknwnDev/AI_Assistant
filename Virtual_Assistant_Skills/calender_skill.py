@@ -38,7 +38,7 @@ class Calendar_Skill():
 
 		# find the event
 		for event in self.c.events:
-			if event.name == event_name:
+			if event.name.lower() == event_name.lower():
 				# found it
 				self.c.events.remove(event)
 				print("Removing event:", event_name)
@@ -85,7 +85,7 @@ class Calendar_Skill():
 		# Check if the file exists
 		if my_file.is_file():
 			stream = open(filename,'r')
-			event_list = yaml.load(stream)
+			event_list = yaml.load(stream, Loader=yaml.Loader)
 			for item in event_list:
 				e = Event()
 				e.begin = item['begin']
@@ -130,10 +130,3 @@ class Calendar_Skill():
 					event_list.append(event)
 			
 			return event_list
-
-time = datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S')
-cal = Calendar_Skill()
-cal.add_event(time, "Test", "math-140 test")
-cal.add_event(time, "Other", "math-140 test")
-print(cal.list_events("all"))
-cal.save()
