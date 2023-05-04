@@ -133,5 +133,6 @@ class Calendar_Skill():
 
 cal = Calendar_Skill()
 cal.add_event(datetime.now(), "Test", "math-140 test")
+cal.add_event(datetime.now(), "Other", "math-140 test")
 cal.save()
 cal.list_events()
