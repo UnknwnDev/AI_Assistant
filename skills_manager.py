@@ -1,7 +1,7 @@
 import pyjokes
 import dateparser
-from Virtual_Assistant_Skills.calender_skill import Calendar_Skill
-from Virtual_Assistant_Skills.Notes_and_Todos.todo_list import Todo, Item
+from skills.calender import Calendar_Skill
+from skills.todo import Todo, Item
 
 class Skills:
 	__todo = Todo()

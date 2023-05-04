@@ -1,12 +1,12 @@
 import os
 import sys
 import playsound
-import Voice_Recognition.error_fix
+import error_fix
 from gtts import gTTS 
 import speech_recognition as sr
 from neuralintents import GenericAssistant
 sys.path.append('./')
-from Virtual_Assistant_Skills.skills_manager import Skills
+from skills_manager import Skills
 
 """
 	NOTE: Change this later to use NLP and RNN
@@ -22,7 +22,7 @@ class AI:
 
 		self.skills = Skills(self)
 
-		self.assistant = GenericAssistant('Voice_Recognition/intents.json')
+		self.assistant = GenericAssistant('data/intents.json')
 		if name is not None:
 			self.__name = name
 			if new_flag:

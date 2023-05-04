@@ -1,6 +1,6 @@
 # Name of Virtual Assistant: OLIVIA - Organic Learning and Interactive Virtual Intelligence Assistant
 # TODO: Renname file later
-from Voice_Recognition.ai import AI
+from ai import AI
 
 olivia = AI('Olivia')
 

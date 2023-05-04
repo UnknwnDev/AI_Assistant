@@ -7,7 +7,7 @@ from ics import Calendar, Event
 from dateutil.relativedelta import *
 
 calender_filename = 'docs/myfile.ics'
-calender_datafile = 'Virtual_Assistant_Skills/data/myfile.yml'
+calender_datafile = 'data/myfile.yml'
 
 
 class Calendar_Skill():
