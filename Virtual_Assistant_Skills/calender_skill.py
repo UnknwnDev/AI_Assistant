@@ -117,7 +117,7 @@ class Calendar_Skill():
 			event_list = []
 			# have to fix localization - that the +00 timezone bit on the date
 			# otherwise it complains of non-naive date being compared to naive date
-			now = pytz.utc.localize(datetime.now())
+			now = pytz.utc.localize(datetime.utcnow())
 			now = now.astimezone(pytz.timezone('US/Pacific'))
 			if period == "this week":
 				nextperiod = now+relativedelta(weeks=+1)
