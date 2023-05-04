@@ -7,7 +7,7 @@ from ics import Calendar, Event
 from dateutil.relativedelta import *
 
 calender_filename = 'doc/myfile.ics'
-calender_datafile = 'myfile.yml'
+calender_datafile = 'Virtual_Assistant_Skills/data/myfile.yml'
 
 
 class Calendar_Skill():
@@ -23,7 +23,8 @@ class Calendar_Skill():
 	def add_event(self, begin:str, name:str, description:str=None) -> bool:
 		''' adds an even to calender '''
 		e = Event()
-		e.name = namee.begin # format should be = '2023-05-03 19:30:00'
+		e.name = name
+		e.begin = begin # format should be = '2023-05-03 19:30:00'
 		e.description = description
 		try:
 			self.c.events.add(e)
@@ -54,6 +55,7 @@ class Calendar_Skill():
 			my_event['begin'] = event.begin.datetime
 			my_event['name'] = event.name
 			my_event['description'] = event.description
+			dict.append(my_event)
 			# print('parsing file:', yaml.dump(dict, default_flow_style=False))
 		return dict
 
@@ -94,7 +96,7 @@ class Calendar_Skill():
 			# file doesn't exist
 			print("File does not exist")
 	
-	def list_evnets(self, period:str=None) -> bool:
+	def list_events(self, period:str=None) -> bool:
 		''' Lists the upcoming events
 		if `period` is left empty it will default to today
 		other options are:
@@ -113,7 +115,7 @@ class Calendar_Skill():
 			return None
 		else:
 			event_list = []
-			# have to fix localisatopnm - that the +00 timezone bit on the date
+			# have to fix localization - that the +00 timezone bit on the date
 			# otherwise it complains of non-naive date being compared to naive date
 			now = pytz.utc.localize(datetime.now())
 			if period == "this week":
@@ -128,4 +130,8 @@ class Calendar_Skill():
 					event_list.append(event)
 			
 			return event_list
-			
+
+cal = Calendar_Skill()
+cal.add_event(datetime.now(), "Test", "math-140 test")
+cal.save()
+cal.list_events()

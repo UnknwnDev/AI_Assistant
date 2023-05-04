@@ -66,7 +66,7 @@ class Skills:
 			self.__calender.save()
 			return True
 		except:
-			print("Opps there was an error")
+			print("Oops there was an error")
 			return False
 	
 	def remove_event() -> bool:
@@ -81,5 +81,37 @@ class Skills:
 				self.__ai.say("Sorry I could not find the event", event_name)
 				return False
 		except:
-			print("Oops ther was an error")
+			print("Oops there was an error")
 			return False
+
+	def list_events(period):
+		this_period = self.__calender.list_events(period=period)
+		if this_period is not None:
+			message = "There "
+			if len(this_period) > 1:
+				message = message + 'are '
+			else:
+				message = message + 'is '
+			message = message + str(len(this_period))
+			if len(this_period) > 1:
+				message = message + ' events'
+			else:
+				message = message + ' event'
+			message = message + " in the dairy"
+			# print(message)
+			self.__ai.say(message)
+			for event in this_period:
+				event_date = event.begin.datetime
+				weekday = datetime.strftime(event_date, "%A")
+				day = str(event.begin.datetime.day)
+				month = datetime.strftime(event_date, "%B")
+				year = datetime.strftime(event_date, "%Y")
+				time = datetime.strftime(event_date, "%I:%M %p")
+				name = event.name
+				description = event.description
+				message = f"On {weekday} {day} of {month} {year} at {time}"
+				message = f"{message}, there is an event called {name}"
+				message = f"{message} with an event description of {description}"
+				# print(message)
+				self.__ai.say(message)
+				
