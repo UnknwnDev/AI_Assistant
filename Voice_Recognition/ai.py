@@ -6,7 +6,7 @@ from gtts import gTTS
 import speech_recognition as sr
 from neuralintents import GenericAssistant
 sys.path.append('./')
-from Virtual_Assistant_Tasks.skills_manager import Skills
+from Virtual_Assistant_Skills.skills_manager import Skills
 
 """
 	NOTE: Change this later to use NLP and RNN
@@ -16,7 +16,10 @@ class AI:
 	__name = ""
 	def __init__(self, name=None, new_flag = False):
 		self.r = sr.Recognizer()
-		self.m = sr.Microphone(device_index=0)
+		self.m = sr.Microphone()
+
+		print(sr.Microphone.list_microphone_names())
+
 		self.skills = Skills(self)
 
 		self.assistant = GenericAssistant('Voice_Recognition/intents.json')
