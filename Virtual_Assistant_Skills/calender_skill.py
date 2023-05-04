@@ -6,7 +6,7 @@ from datetime import datetime
 from ics import Calendar, Event
 from dateutil.relativedelta import *
 
-calender_filename = 'doc/myfile.ics'
+calender_filename = 'docs/myfile.ics'
 calender_datafile = 'Virtual_Assistant_Skills/data/myfile.yml'
 
 
