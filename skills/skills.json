@@ -1,0 +1,20 @@
+{
+	"plugins": ["skills.goodday", "skills.facts", "skills.jokes", "skills.calendar", "skills.todo"],
+	"skills":[
+    {
+      "name": "facts_skill"
+    },
+		{
+			"name": "jokes_skill"
+		},
+		{
+			"name": "goodday_skill"
+		},
+		{
+			"name": "calendar_skill"
+		},
+		{
+			"name": "todo_skill"
+		}
+  ]
+}
