@@ -41,7 +41,7 @@ olivia.start.trigger()
 current_tag = None
 command = ""
 
-while True and command not in ['good bye', 'bye', 'quit', 'exit', 'goodbye', 'the exit']:
+while True:
 	command = ""
 	command = olivia.listen()
 	current_tag = None

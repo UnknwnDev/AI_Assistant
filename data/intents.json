@@ -31,6 +31,7 @@
       "patterns": [
         "I want to add a todo",
         "add a new todo",
+        "add to my todo list",
         "add a todo to my list",
         "new item on my todo list"
       ],
@@ -44,12 +45,12 @@
       "tag": "remove_todo",
       "patterns": [
         "remove a todo",
-        "Mark a todo as done",
+        "mark a todo as done",
         "remove a todo from the list",
         "remove item on my todo list"
       ],
       "responses": [
-        "Tell me what to remove to your todos?",
+        "Tell me what to remove from your todos?",
         "What do you want to be removed?",
         "What should I remove for you Sir?"
       ]
@@ -57,9 +58,9 @@
     {
       "tag": "show_todos",
       "patterns": [
-        "Show my todos",
-        "What are my todos",
-        "What is on my to do list"
+        "show my todos",
+        "what are my todos",
+        "what is on my to do list"
       ],
       "responses": [
         "The current items on your to do's are",
@@ -71,13 +72,12 @@
     {
       "tag": "add_event",
       "patterns": [
-        "I want to add an event",
-        "add a new event",
-        "add a event to my calender",
-        "new event on my calender"
+        "add a event to my calendar",
+        "create a todo item",
+        "add a new event to my calendar"
       ],
       "responses": [
-        "Tell me what to add to your calender?",
+        "Tell me what to add to your calendar?",
         "What do you want to be added?",
         "What should I add for you Sir?"
       ]
@@ -85,9 +85,9 @@
     {
       "tag": "remove_event",
       "patterns": [
-        "remove a event",
-        "remove event from calender",
-        "Mark event as done"
+        "remove a event from my calendar",
+        "delete a event item",
+        "remove a event from my calendar"
       ],
       "responses": [
         "Tell me what to remove from your events?",
@@ -98,13 +98,13 @@
     {
       "tag": "list_events",
       "patterns": [
-        "Show my calender events",
-        "What are my current events",
-        "What is on my calender",
-        "List my events"
+        "show my calendar events",
+        "what are my current events",
+        "what is on my calendar",
+        "list my events"
       ],
       "responses": [
-        "The current events on your calender are",
+        "The current events on your calendar are",
         "Here are your events",
         "Listing your events"
       ]
@@ -112,15 +112,7 @@
 
     {
       "tag": "exit",
-      "patterns": [
-        "Bye",
-        "Stop",
-        "Quit",
-        "I want to quit",
-        "Goodbye",
-        "I want to exit",
-        "I have to go"
-      ],
+      "patterns": ["bye", "goodbye", "see you later"],
       "responses": [
         "Bye, Sir",
         "See you later",

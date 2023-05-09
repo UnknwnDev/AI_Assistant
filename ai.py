@@ -44,7 +44,7 @@ class AI:
 			else:
 				self.assistant.load_model(self.name)
 
-		self.audio = self.m.open(format=paInt16, channels=1,rate=44100, input=True, frames_per_buffer=8192, input_device_index=5)
+		self.audio = self.m.open(format=paInt16, channels=1,rate=44100, input=True, frames_per_buffer=8192)
 		self.audio.start_stream()
 
 		# Setup event hooks
@@ -74,8 +74,10 @@ class AI:
 		self.lock.acquire()
 		self.before_speaking.trigger(sentence)
 		filename = "out"
+		webfile = "web.mp3"
 		tts.save(filename)
-		playsound.playsound(filename)
+		tts.save(webfile)
+		#playsound.playsound(filename)
 		os.remove(filename)
 		self.after_speaking.trigger(sentence)
 

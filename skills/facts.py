@@ -8,7 +8,7 @@ class Facts_skill():
 	name = 'facts_skill'
 
 	def commands(self, command:str):
-		return 'jokes'
+		return 'facts'
 	
 	def handle_command(self, command:str, ai:AI):
 		fact = randfacts.get_fact()

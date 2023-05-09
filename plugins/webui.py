@@ -1,22 +1,27 @@
 from dataclasses import dataclass
 from ai import AI
 import plugins.plugin_factory
-from flask import Flask, render_template
+from flask import Flask, render_template, send_file, Response
 import logging 
 from threading import Thread
+import os
+
+class Track:
+    def __init__(self, name, path):
+        self.name = name
+        self.path = path
 
 @dataclass
 class Webui_plugin:
     name = 'webui'
     
-    app = None
+    app = Flask(__name__)
     ai = None
 
     def __init__(self):
         self.app = Flask(__name__)
 
     def index(self):
-        
         return render_template('index.html')
 
     def start_flask_thread(self):

@@ -2,7 +2,8 @@
   "plugins": [
     "plugins.cowsay",
     "plugins.conversation_history",
-    "plugins.webui"
+    "plugins.webui",
+    "plugins.audiostream"
   ],
   "items": [
     {
@@ -13,6 +14,9 @@
     },
     {
       "name": "webui_plugin"
+    },
+    {
+      "name": "audio_stream_plugin"
     }
   ]
 }
