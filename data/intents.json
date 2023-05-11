@@ -10,7 +10,7 @@
         "Hi",
         "Good day"
       ],
-      "responses": ["Hello,"]
+      "responses": []
     },
     {
       "tag": "jokes",
@@ -19,6 +19,30 @@
         "Give me something funny",
         "I want to hear a joke",
         "Can you make me laugh"
+      ],
+      "responses": [
+        "Ok Sir, Here is one for you.",
+        "I got a good one for you Sir."
+      ]
+    },
+    {
+      "tag": "facts",
+      "patterns": [
+        "Tell me a fact",
+        "Give me something interesting",
+        "I want to hear a fact"
+      ],
+      "responses": [
+        "Ok Sir, Here is one for you.",
+        "I got a good one for you Sir."
+      ]
+    },
+    {
+      "tag": "insult",
+      "patterns": [
+        "Insult me ",
+        "Talk shit for me",
+        "Make me feel bad"
       ],
       "responses": [
         "Ok Sir, Here is one for you.",
@@ -73,7 +97,7 @@
       "tag": "add_event",
       "patterns": [
         "add a event to my calendar",
-        "create a todo item",
+        "create a event",
         "add a new event to my calendar"
       ],
       "responses": [
@@ -108,6 +132,17 @@
         "Here are your events",
         "Listing your events"
       ]
+    },
+
+    {
+      "tag": "say",
+      "patterns": [
+        "repeat after me",
+        "say this",
+        "can you say this",
+        "can you repeat this"
+      ],
+      "responses": [""]
     },
 
     {
