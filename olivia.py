@@ -6,7 +6,8 @@ from plugins import plugin_loader, plugin_factory
 import json
 from eventhook import Event_hook
 import sys
-
+import os
+from time import sleep
 
 olivia = AI('Olivia')
 
@@ -36,22 +37,30 @@ for item in plugins:
 
 
 
-
 olivia.start.trigger()
 current_tag = None
 command = ""
 
+name = "Olivia"
+
 while True:
 	command = ""
+	
+	while os.path.exists('web.mp3'):
+		continue
+
 	command = olivia.listen()
 	current_tag = None
 
 	if command:
 		print(f'command heard: {command}')
 		command = command.lower()
-		olivia.say(olivia.assistant.request(command))
-		current_tag = olivia.assistant.request_tag(command)
+		if name.lower() in command:
+			message = olivia.assistant.request(command)
+			if message != "":
+				olivia.say(message)
+			current_tag = olivia.assistant.request_tag(command)
 
-		for skill in skills:
-			if current_tag in skill.commands(current_tag):
-				skill.handle_command(current_tag, olivia)
+			for skill in skills:
+				if current_tag in skill.commands(current_tag):
+					skill.handle_command(current_tag, olivia)

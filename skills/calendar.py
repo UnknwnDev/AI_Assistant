@@ -206,6 +206,8 @@ class Calender_skill():
 				message = f"{message} with an event description of {description}"
 				# print(message)
 				olivia.say(message)
+		else:
+			olivia.say("There are no events in the calender!")
 
 	def handle_command(self, command:str, ai:AI):
 		

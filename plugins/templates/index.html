@@ -16,21 +16,6 @@
 	<script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
 		crossorigin="anonymous"></script>
 
-<script type="text/javascript">
-	var intervalId = window.setInterval(doAjax, 500);
-
-	function doAjax() {
-		$.get("http://0.0.0.0:2222/api", function (data, status) {
-			let new_ul = [];
-			data.forEach(obj => {
-				new_ul.push("<li class=" + obj.message_type + ">" + obj.message + "</li>");
-			})
-			// join all the li's
-			$('#chatlog').html("<ul>" + new_ul.join("") + "</ul>");
-		});
-	};
-</script>
-
 </head>
 
 <body>
@@ -43,48 +28,124 @@
 
 	<audio src="" id="audio">
 
+<!-- <script type="text/javascript">
+		var intervalId = window.setInterval(doAjax, 500);
 
-<script>
-	var intervalId = window.setInterval(flagCheck, 500);
-	var source = document.getElementById('audio');
+		function doAjax() {
+			$.ajax("http://10.0.0.3:2222/api", function (data, status) {
+				let new_ul = [];
+				data.forEach(obj => {
+					new_ul.push("<li class=" + obj.message_type + ">" + obj.message + "</li>");
+				})
+				// join all the li's
+				$('#chatlog').html("<ul>" + new_ul.join("") + "</ul>");
+			});
+		};
 
-	let isPlaying = false;
+		var intervalId = window.setInterval(flagCheck, 500);
+		var source = document.getElementById('audio');
 
-	source.addEventListener("ended", () => {
-		isPlaying = false;
-		$.ajax({
-			url: "http://0.0.0.0:5000/delete_sound",
-			dataType: 'json',
-			success: function (data) {
-				// handle the result
-				//console.log(data.result);
+		let isPlaying = false;
+
+		source.addEventListener("ended", () => {
+			isPlaying = false;
+			$.ajax({
+				url: "http://10.0.0.3:5000/delete_sound",
+				dataType: 'json',
+				success: function (data) {
+					// handle the result
+					//console.log(data.result);
+				}
+			});
+		});
+
+		source.addEventListener("pause", () => {
+			isPlaying = false;
+		});
+
+		function playSound() {
+			if (!isPlaying) {
+				source.src = 'http://10.0.0.3:5000/mp3';
+				source.load();
+				source.play();
+				isPlaying = true
 			}
+			return "False"
+		};
+
+		function flagCheck() {
+			$.ajax({
+				url: "http://10.0.0.3:5000/play_sound"
+			}).done(function (res) {
+				if (res.flag == "True")
+					res.flag = playSound()
+			});
+
+		};
+
+</script> -->
+
+<script type="text/javascript">
+	function doAjax() {
+			$.ajax({
+				url: "http://10.0.0.3:2222/api",
+				success: function (data, status) {
+					let new_ul = [];
+					data.forEach(obj => {
+						new_ul.push("<li class=" + obj.message_type + ">" + obj.message + "</li>");
+					})
+					// join all the li's
+					$('#chatlog').html("<ul>" + new_ul.join("") + "</ul>");
+				}
+			});
+		};
+
+		var intervalId = window.setInterval(doAjax, 500);
+
+		var source = document.getElementById('audio');
+		let isPlaying = false;
+
+		source.addEventListener("ended", () => {
+			isPlaying = false;
+			$.ajax({
+				url: "http://10.0.0.3:5000/delete_sound",
+				dataType: 'json',
+				success: function (data) {
+					// handle the result
+					//console.log(data.result);
+				}
+			});
 		});
-	});
 
-	source.addEventListener("pause", () => {
-		isPlaying = false;
-	});
-
-	function playSound() {
-		if (!isPlaying) {
-			source.src = 'http://0.0.0.0:5000/mp3';
-			source.load();
-			source.play();
-			isPlaying = true
-		}
-		return "False"
-	};
-
-	function flagCheck() {
-		$.ajax({
-			url: "http://0.0.0.0:5000/play_sound"
-		}).done(function (res) {
-			if (res.flag == "True")
-				res.flag = playSound()
+		source.addEventListener("pause", () => {
+			isPlaying = false;
 		});
+		
+		function playSound() {
+			if (!isPlaying) {
+				source.src = 'http://10.0.0.3:5000/mp3';
+				source.load();
+				source.play();
+				isPlaying = true
+			}
+			return "False"
+		};
 
-	};
+		function flagCheck() {
+			$.ajax({
+				url: "http://10.0.0.3:5000/play_sound",
+				success: function (res) {
+					if (res.flag == "True") {
+						res.flag = playSound();
+					}
+					console.log(isPlaying, res.flag);
+
+				}
+			});
+		
+		};
+
+		var intervalId = window.setInterval(flagCheck, 500);
 
 </script>
 

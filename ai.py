@@ -71,14 +71,20 @@ class AI:
 		print(sentence)
 		tts = gTTS(text=sentence, lang='en', tld='com.au')
 		
+		while os.path.exists("web.mp3"):
+			continue
+
 		self.lock.acquire()
+		
+		webfile = "web.mp3"
+		tts.save(webfile)
 		self.before_speaking.trigger(sentence)
 		filename = "out"
-		webfile = "web.mp3"
 		tts.save(filename)
-		tts.save(webfile)
+		
 		#playsound.playsound(filename)
 		os.remove(filename)
+
 		self.after_speaking.trigger(sentence)
 
 		self.lock.release()
@@ -94,17 +100,22 @@ class AI:
 		
 		phrase = ""
 		
-		while not os._exists("out"):
-			
+		while os.path.exists("web.mp3"):
+			continue
+
+		while True:
 			if self.r.AcceptWaveform(self.audio.read(4096, exception_on_overflow=False)):
 				self.before_listening.trigger()
 				phrase = self.r.Result()
 				#phrase = phrase.removeprefix('the')
 
 				phrase = str(json.loads(phrase)['text'])
-
-				if phrase:
-					self.after_listening.trigger(phrase)
+				if os.path.exists('web.mp3'):
+					self.listen()
+		
+				if self.name.lower() in phrase.lower():
+					self.after_listening.trigger(phrase.replace(self.name.lower()+" ", ""))
+				
 				return phrase
 
 		return None

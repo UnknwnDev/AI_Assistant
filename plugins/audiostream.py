@@ -6,6 +6,7 @@ from flask_cors import CORS
 import logging
 from threading import Thread
 import os
+from time import sleep
 
 @dataclass
 class Audio_Stream_Plugin:
@@ -14,6 +15,10 @@ class Audio_Stream_Plugin:
 
 	def __init__(self):
 		CORS(self.app)
+		self.app.add_url_rule('/mp3', 'audio_streaming', self.streammp3)
+		self.app.add_url_rule('/play_sound', 'sound', self.play_sound)
+		self.app.add_url_rule('/delete_sound', 'delete_sound', self.delete_sound)
+		logging.getLogger('werkzeug').disabled = True
 
 	def play_sound(self):
 		if os.path.exists('web.mp3'):
@@ -40,15 +45,17 @@ class Audio_Stream_Plugin:
 	def start_flask_thread(self):
 		""" Start flask thread """
 		print("starting api thread")
-		self.app.add_url_rule('/mp3', 'audio_streaming', self.streammp3)
-		self.app.add_url_rule('/play_sound', 'sound', self.play_sound)
-		self.app.add_url_rule('/delete_sound', 'delete_sound', self.delete_sound)
-		self.app.run(host='0.0.0.0', port=5000)
-		self.app.logger.setLevel(logging.ERROR)
+		
 
 	def start(self):
 		print("starting API server")
-		self.flask = Thread(target=self.start_flask_thread,args=())
+		self.flask = Thread(target=self.app.run, kwargs={
+            'host': '0.0.0.0',
+            'port': 5000,
+            'use_reloader': False,
+            'threaded': True,
+						'debug': True
+        })
 		self.flask.start()
 		return self
 

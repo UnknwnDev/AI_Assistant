@@ -15,6 +15,7 @@ class Conversation_history:
     def __init__(self):
         self.items = []
         
+        
     def add_item(self, message_type:str, message:str):
         """ Add items into the conversation history """
 
@@ -50,6 +51,8 @@ class Conversation_history_plugin:
     def __init__(self):
         self.app = Flask(__name__)
         CORS(self.app)
+        self.app.add_url_rule('/api', 'conversation_history', self.get_history)
+        logging.getLogger('werkzeug').disabled = True
 
     def add_response(self, message):
         self.__conversation_history.add_item(message_type='RESPONSE', message=message)
@@ -65,13 +68,16 @@ class Conversation_history_plugin:
     def start_flask_thread(self):
         """ Start flask thread """
         print("starting api thread")
-        self.app.add_url_rule('/api', 'conversation_history', self.get_history)
-        self.app.run(debug=False, host='0.0.0.0', port=2222)
-        self.app.logger.setLevel(logging.ERROR)
 
     def start(self):
         print("starting API server")
-        self.flask = Thread(target=self.start_flask_thread,args=())
+        self.flask = Thread(target=self.app.run, kwargs={
+            'host': '0.0.0.0',
+            'port': 2222,
+            'use_reloader': False,
+            'threaded': True,
+            'debug': True
+        })
         self.flask.start()
         return self
 

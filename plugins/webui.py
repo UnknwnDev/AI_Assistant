@@ -2,6 +2,7 @@ from dataclasses import dataclass
 from ai import AI
 import plugins.plugin_factory
 from flask import Flask, render_template, send_file, Response
+from flask_cors import CORS
 import logging 
 from threading import Thread
 import os
@@ -20,20 +21,32 @@ class Webui_plugin:
 
     def __init__(self):
         self.app = Flask(__name__)
+        CORS(self.app)
+        self.app.add_url_rule('/', 'index', self.index)
+        logging.getLogger('werkzeug').disabled = True
+
 
     def index(self):
         return render_template('index.html')
 
+    @app.after_request
+    def add_header(response):
+        response.cache_control.max_age = 300  # set this to 0 to force a reload every time
+        return response
+
     def start_flask_thread(self):
         """ Start flask thread """
         print("starting flask thread")
-        self.app.add_url_rule('/', 'index', self.index)
-        self.app.run(debug=False, host='0.0.0.0', port=8080)
-        self.app.logger.setLevel(logging.ERROR)
 
     def start(self):
         print("starting Webui server")
-        self.flask = Thread(target=self.start_flask_thread,args=())
+        self.flask = Thread(target=self.app.run, kwargs={
+            'host': '0.0.0.0',
+            'port': 8080,
+            'use_reloader': False,
+            'threaded': True,
+            'debug': True
+        })
         self.flask.start()
         return self
 

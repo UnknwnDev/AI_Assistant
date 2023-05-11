@@ -1,14 +1,10 @@
 {
   "plugins": [
-    "plugins.cowsay",
     "plugins.conversation_history",
     "plugins.webui",
     "plugins.audiostream"
   ],
   "items": [
-    {
-      "name": "cowsay_plugin"
-    },
     {
       "name": "conversation_history_plugin"
     },
