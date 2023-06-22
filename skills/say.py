@@ -11,7 +11,10 @@ class SaySkill:
 	
 	def handle_command(self, command:str, ai:AI):
 		new = ai.listen()
-		ai.say(new)
+		if new is not None:
+			ai.say(new)
+		else:
+			ai.say("Sorry I didn't catch that.")
 
 
 def initialize():

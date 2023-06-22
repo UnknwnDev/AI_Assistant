@@ -8,8 +8,10 @@ from eventhook import Event_hook
 import sys
 import os
 from time import sleep
+from chatbot import ChatBot
 
 olivia = AI('Olivia')
+olivia_chat = ChatBot()
 
 olivia.start = Event_hook()
 olivia.stop = Event_hook()
@@ -36,6 +38,7 @@ for item in plugins:
     item.register(olivia)
 
 
+activated_flag = False # Activates the olivia when name called
 
 olivia.start.trigger()
 current_tag = None
@@ -43,8 +46,10 @@ command = ""
 
 name = "Olivia"
 
+
 while True:
 	command = ""
+	label = ''
 	
 	while os.path.exists('web.mp3'):
 		continue
@@ -52,15 +57,33 @@ while True:
 	command = olivia.listen()
 	current_tag = None
 
+
 	if command:
 		print(f'command heard: {command}')
 		command = command.lower()
-		if name.lower() in command:
-			message = olivia.assistant.request(command)
-			if message != "":
-				olivia.say(message)
-			current_tag = olivia.assistant.request_tag(command)
+		label = olivia.process(command, activated_flag)
+	
+		if not activated_flag and name.lower() in command:
+			olivia.say("Hello Sam, how may I help you?")
+			activated_flag = True
+		elif activated_flag and "exit" in label:
+			olivia.say("Goodbye Sam, see you later.")
+			activated_flag = False
 
-			for skill in skills:
-				if current_tag in skill.commands(current_tag):
-					skill.handle_command(current_tag, olivia)
+		if activated_flag:
+			# if "conversation" in label:
+			olivia_chat.chat(command, olivia)
+			# else:
+			# 	for skill in skills:
+			# 		if label in skill.commands(label):
+			# 			skill.handle_command(label, olivia)
+
+
+		# if 'command' in label:
+		# 	# if message != "":
+		# 	# 	olivia.say(message)
+		# 	if name.lower() in command:
+		# 		for skill in skills:
+		# 			if current_tag in skill.commands(current_tag):
+		# 				skill.handle_command(current_tag, olivia)
+

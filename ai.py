@@ -2,15 +2,13 @@ import os
 import sys
 import json
 import playsound
-from pyaudio import PyAudio, paInt16
-import error_fix
-from gtts import gTTS 
-from neuralintents import GenericAssistant
-from vosk import Model, KaldiRecognizer
+import speech_recognition as sr
+# from TTS.api import TTS
+from transformers import pipeline
 from eventhook import Event_hook
 from threading import Thread, Lock
 from time import sleep
-
+import error_fix
 
 """
 	NOTE: Change this later to use NLP and RNN
@@ -22,12 +20,14 @@ class AI:
 
 	def __init__(self, name=None, new_flag = False):
 		#print(sr.Microphone.list_microphone_names())
+		self.classifier = pipeline("zero-shot-classification", )
+		self.command_labels = ["greeting", "jokes", "facts", "insult", "add todo", "remove todo", "show todos", "add event", "remove event", "list events", "say", "wiki", "exit"]  # All commands
+		self.labels = ["command", "conversation"]
+		# self.tts = TTS("tts_models/en/jenny/jenny")
 
 
-		model = Model("./model") # path to model
-		self.r = KaldiRecognizer(model, 44100)
-
-		self.m = PyAudio()
+		# model = Model("./model") # path to model
+		self.r = sr.Recognizer()
 
 		# info = self.m.get_host_api_info_by_index(0)
 		# numdevices = info.get('deviceCount')
@@ -35,27 +35,12 @@ class AI:
 		# for i in range(0, numdevices):
 		# 		if (self.m.get_device_info_by_host_api_device_index(0, i).get('maxInputChannels')) > 0:
 		# 				print("Input Device id ", i, " - ", self.m.get_device_info_by_host_api_device_index(0, i).get('name'))
-
-		self.assistant = GenericAssistant('data/intents.json')
-		if name is not None:
-			self.__name = name
-			if new_flag:
-				self.__update()
-			else:
-				self.assistant.load_model(self.name)
-
-		self.audio = self.m.open(format=paInt16, channels=1,rate=44100, input=True, frames_per_buffer=8192)
-		self.audio.start_stream()
-
 		# Setup event hooks
+
 		self.before_speaking = Event_hook()
 		self.after_speaking = Event_hook()
 		self.before_listening = Event_hook()
 		self.after_listening = Event_hook()
-
-	def __update(self):
-		self.assistant.train_model()
-		self.assistant.save_model(self.name)
 
 	@property
 	def name(self):
@@ -68,23 +53,22 @@ class AI:
 		self.say(sentence)
 	
 	def speak(self, sentence):
-		print(sentence)
-		tts = gTTS(text=sentence, lang='en', tld='com.au')
+		if sentence == "":
+			sentence = "Sorry I didn't catch that."
+		# tts.tts_to_file(text=sentence, file_path="./out", emotion="Happy", speed=3.5)
 		
-		while os.path.exists("web.mp3"):
-			continue
-
 		self.lock.acquire()
 		
-		webfile = "web.mp3"
-		tts.save(webfile)
+		# webfile = "web.mp3"
+		# tts.save(webfile)
 		self.before_speaking.trigger(sentence)
-		filename = "out"
-		tts.save(filename)
+		# filename = "out"
+		# tts.save(filename)
 		
-		#playsound.playsound(filename)
-		os.remove(filename)
+		# playsound.playsound(filename)
+		# os.remove(filename)
 
+		
 		self.after_speaking.trigger(sentence)
 
 		self.lock.release()
@@ -99,26 +83,72 @@ class AI:
 	def listen(self):
 		
 		phrase = ""
-		
-		while os.path.exists("web.mp3"):
-			continue
 
 		while True:
-			if self.r.AcceptWaveform(self.audio.read(4096, exception_on_overflow=False)):
-				self.before_listening.trigger()
-				phrase = self.r.Result()
-				#phrase = phrase.removeprefix('the')
+			try:
+				with sr.Microphone() as source:
+					self.r.adjust_for_ambient_noise(source, duration=0.2)
 
-				phrase = str(json.loads(phrase)['text'])
-				if os.path.exists('web.mp3'):
-					self.listen()
+					audio = self.r.listen(source)
+
+					phrase = self.r.recognize_google(audio)
+					phrase = phrase.lower()
+					return phrase
+
+			except sr.RequestError as e:
+				print("Could not request reults; {0}".format(e))
+				return None
+
+			except sr.UnknownValueError:
+				print("unknwn error occured")
+				return None
+
+
 		
-				if self.name.lower() in phrase.lower():
-					self.after_listening.trigger(phrase.replace(self.name.lower()+" ", ""))
+
+	def process(self, message: str, flag):
+		original = message.lower()
+		tag = ''
+		command = ''
+		new = ''
+		label, score = self.classify_sentence(message, flag)
+		print(f"Label: {label}")
+		print(f"Score: {score}")
+
+		# if self.name.lower() in original:  # TODO: When Olivia is called start parsing text for command and tag
+		# 	new = original[original.find(self.name.lower()) + len(self.name.lower()):]
+		# 	new = new.replace(' ', '', 1) if new[0] == ' ' else new
+		# 	print(new)
+		# 	print(self.assistant.request(new))
+		# 	print(self.assistant._predict_class(new))
+		return label
+	
+	def classify_sentence(self, sentence, flag):
+		print("="*17 + "classify_sentence" + "="*16)
+		result = self.classifier(sentence, self.labels)
+		label = result["labels"][0]
+		score = result["scores"][0]
+
+		print("Initial: " +label)
+		print("Initial: " +str(score))
+
+		if "command" in label and flag:
+			result = self.classifier(sentence, self.command_labels, multi_label=True)
+
+			label = result["labels"][0]
+			score = result["scores"][0]
+
+			print("Command: " +label)
+			print("Command: " +str(score))
+
+
+		print("="*50)
+		return label, score
 				
-				return phrase
 
-		return None
-
-
-
+'''
+TODO:
+1. Find a way to remove words before and also name example "This is random Olivia Say Hello" -> "Say Hello"
+2. Find a way to seperate taged commands with custom responses.
+3. Return tag and command 
+'''

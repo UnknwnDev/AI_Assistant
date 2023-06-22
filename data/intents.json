@@ -10,7 +10,7 @@
         "Hi",
         "Good day"
       ],
-      "responses": []
+      "responses": [""]
     },
     {
       "tag": "jokes",
@@ -139,6 +139,7 @@
       "patterns": [
         "repeat after me",
         "say this",
+        "say",
         "can you say this",
         "can you repeat this"
       ],

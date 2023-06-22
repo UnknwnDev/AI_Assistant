@@ -142,7 +142,7 @@ class Calender_skill():
 	calendar.load()
 
 	def commands(self, command:str):
-			return ['add_event', 'remove_event', 'list_events']
+			return ['add event', 'remove event', 'list events']
 
 	def add_event(self, olivia:AI) -> bool:
 		try:
@@ -211,11 +211,11 @@ class Calender_skill():
 
 	def handle_command(self, command:str, ai:AI):
 		
-		if command in 'add_event':
+		if command in 'add event':
 				self.add_event(olivia=ai)
-		if command in 'remove_event':
+		if command in 'remove event':
 				self.remove_event(olivia=ai)
-		if command in 'list_events':
+		if command in 'list events':
 				self.list_events(period='this month', olivia=ai)
 			
 

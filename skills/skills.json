@@ -1,5 +1,14 @@
 {
-	"plugins": ["skills.goodday", "skills.facts", "skills.jokes", "skills.calendar", "skills.todo", "skills.say", "skills.insults"],
+	"plugins": [
+    "skills.goodday", 
+    "skills.facts", 
+    "skills.jokes", 
+    "skills.calendar", 
+    "skills.todo", 
+    "skills.say", 
+    "skills.wiki"
+  ],
+  
 	"skills":[
     {
       "name": "facts_skill"
@@ -20,7 +29,7 @@
       "name": "say_skill"
     },
     {
-      "name": "insult_skill"
+      "name": "wiki_skill"
     }
   ]
 }

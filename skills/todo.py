@@ -223,14 +223,14 @@ class Todo_skill():
 
 
 	def commands(self, command:str):
-		return ["add_todo", "remove_todo", "show_todos"]
+		return ["add todo", "remove todo", "show todos"]
 
 	def handle_command(self, command:str, ai:AI):
-		if command in "add_todo":
+		if command in "add todo":
 			self.add_todo(olivia=ai)
-		if command in "show_todos":
+		if command in "show todos":
 			self.list_todos(olivia=ai)
-		if command in "remove_todo":
+		if command in "remove todo":
 			self.remove_todo(olivia=ai)
 
 def initialize():
