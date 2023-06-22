@@ -1,8 +1,0 @@
-from tensorflow.keras.optimizers.legacy import SGD
-
-def request_tag(self, message):
-        ints = self._predict_class(message)[0]['intent']
-        if ints in self.intent_methods.keys():
-            return ints
-        else:
-            return ints
