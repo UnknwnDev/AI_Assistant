@@ -17,7 +17,7 @@ To explore the AI_Assistant project, follow these steps:
 
 1. **Clone the Repository:**
    ```bash
-   git clone https://github.com/your-username/AI_Assistant.git
+   git clone https://github.com/UnknwnDev/AI_Assistant.git
    cd AI_Assistant
 
 ## Review the Code:
